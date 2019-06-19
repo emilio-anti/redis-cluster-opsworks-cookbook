@@ -1,0 +1,13 @@
+# Host and port we will listen for requests on
+port 16379
+
+#
+# "redis-cluster" is the name of our cluster
+# each sentinel process is paired with a redis-server process
+#
+sentinel monitor redis-cluster <%= node['opsworks-redis-cluster']['master-ip'] %> 6379 2
+sentinel down-after-milliseconds redis-cluster 10000
+sentinel parallel-syncs redis-cluster 1
+sentinel failover-timeout redis-cluster 9000
+
+daemonize yes
